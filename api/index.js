@@ -65,6 +65,57 @@ class Severino{
 
         })
 
+        .get('/projetos', (_, res) => {
+
+            console.log("[ SEV ] Enviando lista de projetos");
+
+            this.client.query("select * from projetos", (_, ans) => {
+
+                res.send(ans.rows);
+
+            })
+            
+
+        })
+
+        .post('/projetos', (req, res) => {
+
+            let projeto = req.body
+        
+            console.log("[ SEV ] Adicionando projeto "+projeto.nome);
+
+            this.client.query(`insert into projetos(nome,enviroment_script, run_script, path, repository) values 
+                ('${projeto.nome}', '${projeto.enviroment_script}','${projeto.run_script}','${projeto.path}'
+                 '${projeto.repository}')`, (_, ans) => {
+
+                res.send("ok");
+
+            })
+
+        })
+
+        .delete('/projetos', (req, res) => {
+
+            let projeto = req.body.projeto
+        
+            console.log("[ SEV ] Removendo projeto de id "+projeto);
+
+            this.client.query(`delete from projetos where projetos.id= '${projeto}';`, (_, ans) => {
+
+                this.client.query(`delete from tarefas_projeto where tarefas_projeto.projeto= '${projeto}';`, (_, ans) => {
+
+                    this.client.query(`delete from notes_projeto where notes_projeto.projeto= '${projeto}';`, (_, ans) => {
+
+                        res.send("ok");
+        
+                    })
+    
+                })
+
+            })
+
+        })
+
         this.server.listen(this.port, _ => console.log("Dale Severino"))
 
 
