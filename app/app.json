@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "natives",
-    "slug": "natives",
+    "name": "Severino",
+    "slug": "severino",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -24,7 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.tk.severino"
+    },
+
+    "android": {
+      "package": "com.tk.severino"
     }
   }
 }
